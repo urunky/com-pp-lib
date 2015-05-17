@@ -75,7 +75,7 @@ package com.pp.lib.starling.ui.gridContainer
 		public function get hDistance():int					{	return _symbolWidth + _hSpacing ;	}
 		public function get vDistance():int					{	return _symbolHeight + _vSpacing ;	}
 		
-		private var _symbolContainer:Sprite ;
+		private var _symbolContainer:Container ;
 		
 		public function get symbolIdxLength():int				{	return _symbolByIdx.length }
 		
@@ -108,8 +108,7 @@ package com.pp.lib.starling.ui.gridContainer
 		private function init():void
 		{
 			_symbolByIdx = [] ;
-			
-			_symbolContainer = new Sprite ;
+			_symbolContainer = new Container ;
 			addChild( _symbolContainer ) ;
 		}
 		
@@ -123,7 +122,7 @@ package com.pp.lib.starling.ui.gridContainer
 	*/
 		
 		
-		public function add( symbol:GridContainerSymbol, delay:Number = 0 ):void
+		public function add( symbol:GridContainerSymbol ):void
 		{
 			var idx:int = symbolNum ; ;
 			
@@ -149,22 +148,6 @@ package com.pp.lib.starling.ui.gridContainer
 			symbol.x = _padding.left + hIdx * hDistance ;
 			symbol.y = _padding.top + vIdx * vDistance ;
 			_symbolContainer.addChild( symbol as DisplayObject ) ;
-			symbol.visible = false ;
-			if ( delay > 0 )
-			{
-				var onDelay:Function = function():void
-				{
-					symbol.visible = true ;
-				//	symbol.alpha = 0;
-				//	TweenLite.to( symbol, 0.1, {"alpha":1 } ) ;
-				}
-				Starling.juggler.delayCall( onDelay, delay ) ;
-			}
-			else
-			{
-				symbol.visible = true ;
-			}
-			
 		}
 		
 		

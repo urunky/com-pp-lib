@@ -4,23 +4,23 @@ package com.pp.lib.astar
 
 	public class AStar
 	{
-		private var _nodes:Vector.<IAStarNode> = null ;
-		public function set nodes(value:Vector.<IAStarNode>):void					{	_nodes = value;	}
+		private var _nodes:Vector.<AStarNode> = null ;
+		public function set nodes(value:Vector.<AStarNode>):void					{	_nodes = value;	}
 		
-		private var _opened:Vector.<IAStarNode> ;
-		private var _closed:Vector.<IAStarNode> ;
-		private var _visited:Vector.<IAStarNode> ;
+		private var _opened:Vector.<AStarNode> ;
+		private var _closed:Vector.<AStarNode> ;
+		private var _visited:Vector.<AStarNode> ;
 		
 		
-		public function AStar( nodes:Vector.<IAStarNode >)
+		public function AStar( nodes:Vector.<AStarNode >)
 		{
 			_nodes = nodes ;
-			_opened = new Vector.<IAStarNode> ; 
-			_closed = new Vector.<IAStarNode>  ; 
-			_visited = new Vector.<IAStarNode>  ; 
+			_opened = new Vector.<AStarNode> ; 
+			_closed = new Vector.<AStarNode>  ; 
+			_visited = new Vector.<AStarNode>  ; 
 		}
 		
-		public function solve( startNode:IAStarNode, goalNode:IAStarNode, onlyWalkable:Boolean = true ):Array
+		public function solve( startNode:AStarNode, goalNode:AStarNode, onlyWalkable:Boolean = true ):Array
 		{
 			if ( startNode == null || goalNode == null ) return null ;
 			if ( startNode.gridX == goalNode.gridX && startNode.gridY == goalNode.gridY) return null ; 
@@ -29,7 +29,7 @@ package com.pp.lib.astar
 			_closed.length = 0 ;
 			_visited.length = 0 ;
 			
-			var node:IAStarNode = startNode;
+			var node:AStarNode = startNode;
 			
 			node.h = distEuclidian_2( startNode.viewX, startNode.viewY, goalNode.viewX, goalNode.viewY );
 			node.parent = null ;
@@ -37,7 +37,7 @@ package com.pp.lib.astar
 			
 			var solved:Boolean = false;
 			
-			var node_2:IAStarNode ;
+			var node_2:AStarNode ;
 			
 			// Ok let's start
 			while( !solved ) 
@@ -98,7 +98,7 @@ package com.pp.lib.astar
 				path[ path.length ] = new Point( node.viewX, node.viewY )   ; //new IntPoint( node.row, node.col));
 				// ...walk all the way to the start to record where we've been...
 				//while (node.parent && node.parent != startNode) 
-				var oldNode:IAStarNode ;
+				var oldNode:AStarNode ;
 				while ( node.parent )
 				{
 					oldNode = node ;
@@ -125,7 +125,7 @@ package com.pp.lib.astar
 			return Math.sqrt( (n1x-n2x) * (n1x-n2x) + (n1y-n2y) *(n1y-n2y) ) ;
 		}
 		
-		private function sortByF( node_1:IAStarNode, node_2:IAStarNode ):int
+		private function sortByF( node_1:AStarNode, node_2:AStarNode ):int
 		{
 			if ( node_1.f > node_2.f ) return 1 ;
 			if ( node_1.f < node_2.f ) return -1 ;
