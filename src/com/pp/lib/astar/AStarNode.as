@@ -2,6 +2,16 @@ package com.pp.lib.astar
 {
 	public class AStarNode 
 	{
+		public static const LEFT:String = "l" ;
+		public static const RIGHT:String = "r" ;
+		public static const TOP:String = "t" ;
+		public static const BOTTOM:String = "b" ;
+		
+		public static const LEFT_TOP:String = "lt" ;
+		public static const LEFT_BOTTOM:String = "lb" ;
+		public static const RIGHT_TOP:String = "rt" ;
+		public static const RIGHT_BOTTOM:String = "rb" ;
+		
 		private var _g:int = 0;  
 		public function get g():int											{	return _g;		}
 		public function set g( val:int):void								{	_g = val;		}
@@ -61,14 +71,19 @@ package com.pp.lib.astar
 		
 		public function reset():void
 		{
-			_nbByKey["l"] = null ;
-			_nbByKey["r"] = null ;
-			_nbByKey["t"] = null ;
-			_nbByKey["b"] = null ;
-			_nbByKey["lt"] = null ;
-			_nbByKey["rt"] = null ;
-			_nbByKey["lb"] = null ;
-			_nbByKey["rb"] = null ;
+			_nbByKey[ LEFT ] = null ;
+			_nbByKey[ RIGHT ] = null ;
+			_nbByKey[ TOP ] = null ;
+			_nbByKey[ BOTTOM ] = null ;
+			_nbByKey[ LEFT_TOP ] = null ;
+			_nbByKey[ RIGHT_TOP ] = null ;
+			_nbByKey[ LEFT_BOTTOM ] = null ;
+			_nbByKey[ RIGHT_BOTTOM ] = null ;
+		}
+		
+		public function resetNeighbor( position:String, node:AStarNode ):void
+		{
+			_nbByKey[ position ] = node ;
 		}
 		
 		public function findWalkableNeighborNodeFrom( fromX:int, fromY:int ):AStarNode
@@ -97,6 +112,17 @@ package com.pp.lib.astar
 			}
 			return minNode ;
 		}
+		
+		public function findWalkableNeightbors():Array
+		{
+			var results:Array = [] ;
+			for each ( var node:AStarNode in _nbByKey )
+			{
+				if ( node.isWalkable() ) results.push( node ) ;
+			}
+			return results ;
+		}
+		
 		
 		public function findWalkableNeighborNodes( fromNode:AStarNode, nodes:Array, depth:int ):void
 		{

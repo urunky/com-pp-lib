@@ -11,13 +11,17 @@ package com.pp.lib.astar
 		private var _closed:Vector.<AStarNode> ;
 		private var _visited:Vector.<AStarNode> ;
 		
-		
-		public function AStar( nodes:Vector.<AStarNode >)
+		public function AStar( nodes:Vector.<AStarNode > = null )
 		{
 			_nodes = nodes ;
+			init() ;
+		}
+		
+		private function init():void
+		{
 			_opened = new Vector.<AStarNode> ; 
-			_closed = new Vector.<AStarNode>  ; 
-			_visited = new Vector.<AStarNode>  ; 
+			_closed = new Vector.<AStarNode> ; 
+			_visited = new Vector.<AStarNode> ; 
 		}
 		
 		public function solve( startNode:AStarNode, goalNode:AStarNode, onlyWalkable:Boolean = true ):Array
@@ -93,9 +97,9 @@ package com.pp.lib.astar
 			if ( solved ) 
 			{
 				// We did! Format the data for use.
-				var path:Array = [] ; ; 
+				var points:Array = [] ; ; 
 				// Start at the end...
-				path[ path.length ] = new Point( node.viewX, node.viewY )   ; //new IntPoint( node.row, node.col));
+				points[ points.length ] = new Point( node.viewX, node.viewY )   ; //new IntPoint( node.row, node.col));
 				// ...walk all the way to the start to record where we've been...
 				//while (node.parent && node.parent != startNode) 
 				var oldNode:AStarNode ;
@@ -104,12 +108,12 @@ package com.pp.lib.astar
 					oldNode = node ;
 					node = node.parent;
 					oldNode.parent = null ;
-					path[ path.length ] = new Point( node.viewX, node.viewY ) ;
+					points[ points.length ] = new Point( node.viewX, node.viewY ) ;
 				}
 				// ...and add our initial position.
 				//	solution.push(new IntPoint(node.col, node.row));
-				path.reverse();
-				return path ;
+				points.reverse();
+				return points ;
 			}
 			else 
 			{
